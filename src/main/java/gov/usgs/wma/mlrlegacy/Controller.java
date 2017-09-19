@@ -38,8 +38,10 @@ public class Controller {
 
 	@PostMapping()
 	public MonitoringLocation createMonitoringLocation(@RequestBody MonitoringLocation ml, HttpServletResponse response) {
+		ml.setCreatedBy("TEMP");
+		ml.setUpdatedBy("TEMP");
 		BigInteger newId = mLDao.create(ml);
-		
+
 		response.setStatus(HttpStatus.CREATED.value());
 		return mLDao.getById(newId);
 	}
@@ -48,12 +50,13 @@ public class Controller {
 	public MonitoringLocation updateMonitoringLocation(@PathVariable("id") String id, @RequestBody MonitoringLocation ml,
 			HttpServletResponse response) {
 		BigInteger idInt = NumberUtils.parseNumber(id, BigInteger.class);
-		
+
 		if (null == mLDao.getById(idInt)) {
 			response.setStatus(HttpStatus.NOT_FOUND.value());
 		}
 		else {
 			ml.setId(idInt);
+			ml.setUpdatedBy("TEMP");
 			mLDao.update(ml);
 		}
 		return mLDao.getById(idInt);

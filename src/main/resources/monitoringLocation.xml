@@ -157,9 +157,9 @@
                 #{projectNumber, jdbcType=CHAR},
                 #{siteWebReadyCode, jdbcType=CHAR},
                 #{createdBy, jdbcType=CHAR},
-                cast (#{created, jdbcType=CHAR} as date),
+                now() at time zone 'utc',
                 #{updatedBy, jdbcType=CHAR},
-                cast (#{updated, jdbcType=CHAR} as date),
+                now() at time zone 'utc',
                 #{minorCivilDivisionCode, jdbcType=CHAR}
             )
     </insert>
@@ -219,10 +219,8 @@
                depth_src_cd = #{sourceOfDepthCode, jdbcType=CHAR},
                project_no = #{projectNumber, jdbcType=CHAR},
                site_web_cd = #{siteWebReadyCode, jdbcType=CHAR},
-               site_cn = #{createdBy, jdbcType=CHAR},
-               site_cr = cast (#{created, jdbcType=CHAR} as date),
                site_mn = #{updatedBy, jdbcType=CHAR},
-               site_md = cast (#{updated, jdbcType=CHAR} as date),
+               site_md = now() at time zone 'utc',
                mcd_cd = #{minorCivilDivisionCode, jdbcType=CHAR}
          where legacy_location_id = #{id, jdbcType=NUMERIC}
     </update>

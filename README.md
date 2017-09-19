@@ -23,7 +23,7 @@ In either case, configuration information will be pulled from the maven setting.
     <id>it</id>
     <properties>
       <postgresPassword>changeMe</postgresPassword>
-      <mlrLegaPassword>changeMe</mlrLegacyPassword>
+      <mlrLegacyPassword>changeMe</mlrLegacyPassword>
       <mlrLegacyDataPassword>changeMe</mlrLegacyDataPassword>
       <mlrLegacyUserPassword>changeMe</mlrLegacyUserPassword>
       <mlrLegacyDataUsername>mlr_legacy_data</mlrLegacyDataUsername>
