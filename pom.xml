@@ -12,6 +12,8 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <springfox.version>2.7.0</springfox.version>
         <wma.artifactory.url>https://cida.usgs.gov/artifactory</wma.artifactory.url>
+        <additionalparam>-Xdoclint:none</additionalparam>
+        <keycloak.version>3.2.0.Final</keycloak.version>
     </properties>
 
     <distributionManagement>
@@ -45,6 +47,14 @@
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
 
+<!--         <dependency> -->
+<!--             <groupId>org.springframework.security</groupId> -->
+<!--             <artifactId>spring-security-web</artifactId> -->
+<!--         </dependency> -->
+<!--         <dependency> -->
+<!--             <groupId>org.springframework.security</groupId> -->
+<!--             <artifactId>spring-security-config</artifactId> -->
+<!--         </dependency> -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
@@ -83,6 +93,22 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
+        </dependency>
+
+<!--         <dependency> -->
+<!--             <groupId>org.keycloak</groupId> -->
+<!--             <artifactId>keycloak-spring-security-adapter</artifactId> -->
+<!--             <version>${keycloak.version}</version> -->
+<!--         </dependency> -->
+        <dependency>
+            <groupId>org.keycloak</groupId>
+            <artifactId>keycloak-spring-boot-adapter</artifactId>
+            <version>${keycloak.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.keycloak</groupId>
+            <artifactId>keycloak-tomcat8-adapter</artifactId>
+            <version>${keycloak.version}</version>
         </dependency>
 
         <!-- Testing -->

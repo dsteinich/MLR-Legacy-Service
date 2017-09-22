@@ -4,10 +4,14 @@ import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.NumberUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class Controller {
 
 	@Autowired
-	public MonitoringLocationDao mLDao;
+	private MonitoringLocationDao mLDao;
 
 	@GetMapping()
 	public List<MonitoringLocation> getMonitoringLocations(
@@ -38,7 +42,6 @@ public class Controller {
 		}
 		return mLDao.getByMap(params);
 	}
-		
 
 	@GetMapping("/{id}")
 	public MonitoringLocation getMonitoringLocation(@PathVariable("id") String id, HttpServletResponse response) {
@@ -51,8 +54,10 @@ public class Controller {
 
 	@PostMapping()
 	public MonitoringLocation createMonitoringLocation(@RequestBody MonitoringLocation ml, HttpServletResponse response) {
+		ml.setCreatedBy(getUsername());
+		ml.setUpdatedBy(getUsername());
 		BigInteger newId = mLDao.create(ml);
-		
+
 		response.setStatus(HttpStatus.CREATED.value());
 		return mLDao.getById(newId);
 	}
@@ -61,15 +66,25 @@ public class Controller {
 	public MonitoringLocation updateMonitoringLocation(@PathVariable("id") String id, @RequestBody MonitoringLocation ml,
 			HttpServletResponse response) {
 		BigInteger idInt = NumberUtils.parseNumber(id, BigInteger.class);
-		
+
 		if (null == mLDao.getById(idInt)) {
 			response.setStatus(HttpStatus.NOT_FOUND.value());
 		}
 		else {
 			ml.setId(idInt);
+			ml.setUpdatedBy(getUsername());
 			mLDao.update(ml);
 		}
 		return mLDao.getById(idInt);
+	}
+
+	private String getUsername() {
+		String username = "unknown";
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (!(authentication instanceof AnonymousAuthenticationToken)) {
+			username= authentication.getName();
+		}
+		return username;
 	}
 
 }
