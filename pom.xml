@@ -85,6 +85,13 @@
             <artifactId>postgresql</artifactId>
         </dependency>
 
+
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.8.0</version>
+        </dependency>
+
         <!-- Testing -->
 
         <dependency>
